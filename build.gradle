@@ -1,0 +1,130 @@
+
+buildscript {
+	ext {
+		springBootVersion = '1.5.8.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		/*classpath 'org.liquibase:liquibase-core:3.4.1'
+		classpath "org.liquibase:liquibase-gradle-plugin:1.1.1"
+		classpath 'mysql:mysql-connector-java:5.1.13'*/
+		classpath('io.swagger:swagger-codegen:2.2.3')
+	}
+}
+plugins {
+	id 'net.ltgt.apt' version '0.9'
+}
+ext {
+	mapstructVersion = "1.2.0.Final"
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+war {
+	baseName = 'LyonsVideo'
+	version =  '1.0.0'
+}
+
+/*apply plugin: 'liquibase'*/
+
+
+
+group = 'com.lyon'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	/*compile('org.liquibase:liquibase-core')*/
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+	compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org"
+	compile "com.fasterxml.jackson.datatype:jackson-datatype-hppc"
+	compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+	compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5"
+	compile "com.fasterxml.jackson.core:jackson-annotations"
+	compile "com.fasterxml.jackson.core:jackson-databind"
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+	compile("io.jsonwebtoken:jjwt:0.7.0")
+	compile group: 'org.springframework', name: 'spring-context-support', version: '4.1.0.RELEASE'
+	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-web
+	compile group: 'org.springframework.security', name: 'spring-security-web', version: '4.2.3.RELEASE'
+	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-data
+	compile group: 'org.springframework.security', name: 'spring-security-data', version: '4.2.3.RELEASE'
+	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-config
+	compile group: 'org.springframework.security', name: 'spring-security-config', version: '4.2.3.RELEASE'
+	compile group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.1'
+	compile group: 'javax.inject', name: 'javax.inject', version: '1'
+	compile 'org.mapstruct:mapstruct:1.2.0.Final'
+	compile group: 'org.modelmapper', name: 'modelmapper', version: '1.1.1'
+	compile group: 'org.thymeleaf', name: 'thymeleaf', version: '2.0.5'
+	compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.0.002'
+	compile group: 'com.amazonaws', name: 'amazon-kinesis-client', version: '1.9.0'
+	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.11'
+	apt 'org.mapstruct:mapstruct-processor:1.2.0.Final'
+	runtime('mysql:mysql-connector-java')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.security:spring-security-test')
+}
+
+/*
+def changeLog = "$projectDir/database/changelog.xml"
+
+task('dev') << {
+	println "executing dev"
+	liquibase {
+		activities {
+			main {
+				changeLogFile changeLog
+				url 'jdbc:mysql://localhost/mydb'
+				username 'root'
+				password ''
+			}
+		}
+	}
+}
+task('qa') << {
+	println "executing qa"
+	liquibase {
+		activities {
+			main {
+				changeLogFile changeLog
+				url 'jdbc:mysql://localhost/mydb'
+				username 'root'
+				password ''
+			}
+		}
+	}
+}
+task('prod') << {
+	println "executing prod"
+	liquibase {
+		activities {
+			main {
+				changeLogFile changeLog
+				u url 'jdbc:mysql://localhost/mydb'
+				username 'root'
+				password ''
+			}
+		}
+	}
+}*/
+
+bootRun {
+	addResources = true
+}
+
+bootRepackage {
+	mainClass = 'com.lyon.LyonVideo.LyonVideoApplication'
+}
